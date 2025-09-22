@@ -2442,10 +2442,10 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             let mensagem = `📋 *CHECK-LIST DIÁRIO - LEFE*\n\n`;
             mensagem += `🏥 *Hospital:* ${dadosCabecalho.hospital}\n`;
             mensagem += `📆 *Data:* ${dadosCabecalho.data}\n`;
-            mensagem += `🚑 *VTR:* ${dadosCabecalho.ambulanciaStatus}\n`;
-            mensagem += `*🚑 Placa:* ${dadosCabecalho.placa}\n`;
+            mensagem += `🚑 *VTR:* ${dadosCabecalho.ambulanciaStatus}   `;
+            mensagem += `*Placa:* ${dadosCabecalho.placa}\n`;
             mensagem += `*🚑 km Atual:* ${kmAtual}\n`;
-            mensagem += `*🚑 Km Próxima Troca de Óleo:* ${proximaTrocaOleo}\n`;
+            mensagem += `*🚑 Km Troca de Óleo:* ${proximaTrocaOleo}\n\n`;
             mensagem += `🙋🏻 *Condutor:* ${dadosCabecalho.condutorPlantao}\n`;
             
             // Adicionando o campo "Recebendo de"
@@ -2455,8 +2455,8 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             mensagem += `⏱️ *Plantão:* ${dadosCabecalho.tipoPlantao}\n`;
     
             // Adicionando horários
-            mensagem += `⏰ *Horário Entrada:* ${horarioEntrada}\n`;
-            mensagem += `⏰ *Horário Saída:* ${horarioSaida}\n`;
+            mensagem += `⏰ *Entrada:* ${horarioEntrada}  `;
+            mensagem += `*Saída:* ${horarioSaida}\n`;
             
             // Adicionando localização
             mensagem += `📍 *Localização:* ${localizacaoInfo}\n\n`;
@@ -2476,7 +2476,7 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                 \n${observacoesGerais}\n`;
             }
             
-            mensagem += `\n🙏🏻 *Deus seja louvado!!!*`;
+            mensagem += `\n🙏🏻 *Bom trabalho a todos!*`;
             
             // Armazenar mensagem atual para uso posterior
             mensagemWhatsAppAtual = mensagem;
