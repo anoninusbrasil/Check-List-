@@ -32,6 +32,8 @@
             --edit-color: #00796B;
             --whatsapp-color: #25D366;
             --whatsapp-dark: #128C7E;
+            --ponto-color: #9C27B0; /* Roxo para o botão da folha de ponto */
+            --ponto-dark: #7B1FA2;
         }
         body {
             font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -146,6 +148,8 @@
         .btn-toggle-details:hover { background: #455A64; }
         .btn-backup { background: #9C27B0; }
         .btn-backup:hover { background: #7B1FA2; }
+        .btn-ponto { background: var(--ponto-color); } /* Novo estilo para o botão Folha de Ponto */
+        .btn-ponto:hover { background: var(--ponto-dark); }
         
         /* Botão flutuante para alternar a barra */
         .fab-toggle {
@@ -1132,6 +1136,8 @@
             <span>👁️ Ocultar</span>
         </button>
         <button class="btn-backup" onclick="abrirBackup()" title="Backup">💾 Backup</button>
+        <!-- Novo botão para Folha de Ponto -->
+        <button class="btn-ponto" onclick="abrirFolhaPonto()" title="Folha de Ponto">📄 Folha de Ponto</button>
         <span id="saveIndicator" class="save-indicator"></span>
     </div>
     
@@ -3200,6 +3206,12 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                     }
                 }, 1000 * (index + 1));
             });
+        }
+        
+        // Nova função para abrir a Folha de Ponto
+        function abrirFolhaPonto() {
+            window.open('https://usa24hs.github.io/ponto/', '_blank');
+            showNotification('✓ Abrindo Folha de Ponto', 'success');
         }
         
         // Inicialização
