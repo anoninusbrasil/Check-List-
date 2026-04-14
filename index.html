@@ -1202,9 +1202,9 @@
         
         <!-- Tabela Dados Básicos -->
         <table class="compact-table details-section">
-            <tr><td><strong class="required-label">🏥 Hospital:</strong></td><td><input type="text" id="hospital" placeholder="Hospital Raimundo Lima" required></td></tr>
-            <tr><td><strong class="required-label">📆 Data:</strong></td><td><input type="date" id="data" required></td></tr>
-            <tr><td><strong class="required-label">⏱️ Plantão:</strong></td>
+            <tr><th><strong class="required-label">🏥 Hospital:</strong></th><td><input type="text" id="hospital" placeholder="Hospital Raimundo Lima" required></td></tr>
+            <tr><th><strong class="required-label">📆 Data:</strong></th><td><input type="date" id="data" required></td></tr>
+            <tr><th><strong class="required-label">⏱️ Plantão:</strong></th>
                 <td>
                     <select id="tipoPlantao" required>
                         <option value="">Selecione...</option>
@@ -1217,39 +1217,39 @@
                     </select>
                 </td>
             </tr>
-            <tr><td><strong class="required-label">⏰ Horário de Entrada:</strong></td><td><input type="time" id="horarioEntrada" value="07:00" required></td></tr>
-            <tr><td><strong class="required-label">⏰ Horário de Saída:</strong></td><td><input type="time" id="horarioSaida" value="19:00" required></td></tr>
-            <tr><td><strong class="required-label">🙋 Condutor de Plantão:</strong></td><td><input type="text" id="condutorPlantao" placeholder="Nome completo" required></td></tr>
-            <tr><td><strong class="required-label">🫂 Recebendo de:</strong></td><td><input type="text" id="recebendoDe" placeholder="Nome do condutor anterior" required></td></tr>
+            <tr><th><strong class="required-label">⏰ Horário de Entrada:</strong></th><td><input type="time" id="horarioEntrada" value="07:00" required></td></tr>
+            <tr><th><strong class="required-label">⏰ Horário de Saída:</strong></th><td><input type="time" id="horarioSaida" value="19:00" required></td></tr>
+            <tr><th><strong class="required-label">🙋 Condutor de Plantão:</strong></th><td><input type="text" id="condutorPlantao" placeholder="Nome completo" required></td></tr>
+            <tr><th><strong class="required-label">🫂 Recebendo de:</strong></th><td><input type="text" id="recebendoDe" placeholder="Nome do condutor anterior" required></td></tr>
         </table>
         
         <h2 class="details-section">🚑 DADOS DA VIATURA (BASICA / USA)</h2>
         <table class="compact-table details-section">
             <tr><th>Item</th><th>Informação</th></tr>
             <tr>
-                <td><strong class="required-label">Ambulância</strong></td>
+                <th><strong class="required-label">Ambulância</strong></th>
                 <td>
                     <input type="radio" id="ambulanciaBasica" name="ambulanciaStatus" value="BÁSICA" required> 
                     <label for="ambulanciaBasica">BÁSICA</label>
                     <input type="radio" id="ambulanciaUSA" name="ambulanciaStatus" value="USA"> 
                     <label for="ambulanciaUSA">USA / UTI</label>
-                </td>
-            </tr>
-            <tr><td><strong class="required-label">Placa</strong></td><td><input type="text" id="placa" placeholder="Ex: ABC1234 ou ABC1D23" onblur="validarPlaca()" required></td></tr>
-            <tr><td><strong class="required-label">Km Atual</strong></td><td><input type="number" id="kmAtual" placeholder="Ex: 337847" required></td></tr>
-            <tr><td><strong class="required-label">Nível de Combustível</strong></td><td><input type="text" id="nivelCombustivel" placeholder="Ex: 5/10 traços ou 1/2 tanque" required></td></tr>
-            <tr><td><strong class="required-label">CRV Válido até</strong></td><td><input type="number" id="crvValido" placeholder="Ano (ex: 2024)" required></td></tr>
-            <tr><td><strong class="required-label">Próxima Troca de Óleo km</strong></td><td><input type="number" id="proximaTrocaOleo" placeholder="Km da próxima troca" required></td></tr>
+                 </td>
+             </tr>
+            <tr><th><strong class="required-label">Placa</strong></th><td><input type="text" id="placa" placeholder="Ex: ABC1234 ou ABC1D23" onblur="validarPlaca()" required></td></tr>
+            <tr><th><strong class="required-label">Km Atual</strong></th><td><input type="number" id="kmAtual" placeholder="Ex: 337847" required></td></tr>
+            <tr><th><strong class="required-label">Nível de Combustível</strong></th><td><input type="text" id="nivelCombustivel" placeholder="Ex: 5/10 traços ou 1/2 tanque" required></td></tr>
+            <tr><th><strong class="required-label">CRV Válido até</strong></th><td><input type="number" id="crvValido" placeholder="Ano (ex: 2024)" required></td></tr>
+            <tr><th><strong class="required-label">Próxima Troca de Óleo km</strong></th><td><input type="number" id="proximaTrocaOleo" placeholder="Km da próxima troca" required></td></tr>
             <tr>
-                <td><strong class="required-label">Cartão de Abastecimento</strong></td>
+                <th><strong class="required-label">Cartão de Abastecimento</strong></th>
                 <td>
                     <input type="radio" id="cartaoDisponivel" name="cartaoStatus" value="Disponível" required> 
                     <label for="cartaoDisponivel">Disponível</label>
                     <input type="radio" id="cartaoNaoDisponivel" name="cartaoStatus" value="Não Disponível"> 
                     <label for="cartaoNaoDisponivel">Não Disponível</label>
-                </td>
-            </tr>
-        </table>
+                 </td>
+             </tr>
+         </table>
         
         <!-- Localização -->
         <div id="localizacao" class="location-info no-print details-section"></div>
@@ -1261,7 +1261,7 @@
                 <tr>
                     <th class="no-print"><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
                     <th>#</th><th>Item</th><th>Status</th><th>Observação</th>
-                </tr>
+                 </tr>
             </thead>
             <tbody>
                 <!-- Itens gerados via JS -->
@@ -1534,6 +1534,24 @@
         
         // Variável de controle para ativar/desativar a mensagem temporária
         const SHOW_TEMPORARY_MESSAGE = true; // Altere para false para desativar
+        
+        // ========== FUNÇÃO AUXILIAR PARA FORMATAR ITENS (ÍCONE ANTES DO NOME) ==========
+        function formatarItemParaExibicao(item) {
+            const statusMap = {
+                "✅ OK": { icon: "✅", text: "OK" },
+                "⚠️ Ruim": { icon: "⚠️", text: "Ruim" },
+                "🛠️  Quebrado": { icon: "🛠️", text: "Quebrado" },
+                "❌ Faltando": { icon: "❌", text: "Faltando" },
+                "🚨 Parar VTR": { icon: "🚨", text: "Parar VTR" }
+            };
+            // Se o status não estiver mapeado (ex: vazio ou não avaliado), usa fallback
+            const statusInfo = statusMap[item.status] || { icon: "", text: item.status || "Não avaliado" };
+            let linha = `${statusInfo.icon} ${item.item}: ${statusInfo.text}`;
+            if (item.obs && item.obs !== '---') {
+                linha += `   Obs: ${item.obs}`;
+            }
+            return linha;
+        }
         
         // Inicializar IndexedDB
         function initIndexedDB() {
@@ -2318,6 +2336,23 @@
                 }
             });
             
+            // Função auxiliar para formatar linha do item (ícone antes do nome)
+            const formatarItemEmail = (item) => {
+                const statusMap = {
+                    "✅ OK": { icon: "✅", text: "OK" },
+                    "⚠️ Ruim": { icon: "⚠️", text: "Ruim" },
+                    "🛠️  Quebrado": { icon: "🛠️", text: "Quebrado" },
+                    "❌ Faltando": { icon: "❌", text: "Faltando" },
+                    "🚨 Parar VTR": { icon: "🚨", text: "Parar VTR" }
+                };
+                const info = statusMap[item.status] || { icon: "", text: item.status || "Não avaliado" };
+                let linha = `${info.icon} ${item.item}: ${info.text}`;
+                if (item.obs && item.obs !== '---') {
+                    linha += `   Obs: ${item.obs}`;
+                }
+                return linha;
+            };
+            
             const corpoEmail = `
 ==============================================================================
                             CHECK-LIST DIÁRIO - LEFE
@@ -2348,22 +2383,22 @@ Cartão de Abastecimento: ${dadosViatura.cartaoStatus}
 ITENS DE INSPEÇÃO
 ==============================================================================
 ITENS COM STATUS ✅ OK (${itensAgrupados['✅ OK'].length} itens)
-${itensAgrupados['✅ OK'].map(item => `• ${item.item}`).join('\n')}
+${itensAgrupados['✅ OK'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ${itensAgrupados['⚠️ Ruim'].length > 0 ? `
 ITENS COM STATUS ⚠️ RUIM (${itensAgrupados['⚠️ Ruim'].length} itens)
-${itensAgrupados['⚠️ Ruim'].map(item => `• ${item.item} - Obs: ${item.obs}`).join('\n')}
+${itensAgrupados['⚠️ Ruim'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ` : ''}
 ${itensAgrupados['🛠️  Quebrado'].length > 0 ? `
-ITENS COM STATUS 🛠️  QUEBRADO (${itensAgrupados['🛠️ Quebrado'].length} itens)
-${itensAgrupados['🛠️ Quebrado'].map(item => `• ${item.item} - Obs: ${item.obs}`).join('\n')}
+ITENS COM STATUS 🛠️  QUEBRADO (${itensAgrupados['🛠️  Quebrado'].length} itens)
+${itensAgrupados['🛠️  Quebrado'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ` : ''}
 ${itensAgrupados['❌ Faltando'].length > 0 ? `
 ITENS COM STATUS ❌ FALTANDO (${itensAgrupados['❌ Faltando'].length} itens)
-${itensAgrupados['❌ Faltando'].map(item => `• ${item.item} - Obs: ${item.obs}`).join('\n')}
+${itensAgrupados['❌ Faltando'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ` : ''}
 ${itensAgrupados['🚨 Parar VTR'].length > 0 ? `
 ITENS COM STATUS 🚨 PARAR VTR (${itensAgrupados['🚨 Parar VTR'].length} itens)
-${itensAgrupados['🚨 Parar VTR'].map(item => `• ${item.item} - Obs: ${item.obs}`).join('\n')}
+${itensAgrupados['🚨 Parar VTR'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ` : ''}
 ${observacoesGerais ? `
 OBSERVAÇÕES GERAIS / AVARIAS
@@ -2374,7 +2409,6 @@ ${observacoesGerais}
 E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()}
 ==============================================================================`.trim();
             const assunto = `Check-list Viatura ${dadosViatura.placa} - ${dadosCabecalho.data}`;
-            // Correção: E-mail destinatário correto
             const destinatario = "lefechecklist@gmail.com";
             const mailtoLink = `mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
             window.location.href = mailtoLink;
@@ -2444,7 +2478,7 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             
             const observacoesGerais = document.getElementById("observacoesAvarias").value;
             
-            // Formatar a mensagem para WhatsApp
+            // Formatar a mensagem para WhatsApp (ícone antes do nome)
             let mensagem = `📋 *CHECK-LIST DIÁRIO - LEFE*\n\n`;
             mensagem += `🏥 *Hospital:* ${dadosCabecalho.hospital}\n`;
             mensagem += `📆 *Data:* ${dadosCabecalho.data}\n`;
@@ -2468,18 +2502,14 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             mensagem += `📍 *Localização:* ${localizacaoInfo}\n\n`;
             
             mensagem += `📝 *ITENS DE INSPEÇÃO:*\n\n`;
+            // Usar a formatação com ícone antes do nome
             itensInspecao.forEach(item => {
-                mensagem += `${item.item}`;
-                mensagem += `: ${item.status}`;
-                if (item.obs !== '---') {
-                    mensagem += `   Obs: ${item.obs}`;
-                }
-                mensagem += `\n`;
+                const formatted = formatarItemParaExibicao(item);
+                mensagem += `${formatted}\n`;
             });
             
             if (observacoesGerais) {
-                mensagem += `\n 🛠️ *OBSERVAÇÕES GERAIS / AVARIAS:*
-                \n${observacoesGerais}\n`;
+                mensagem += `\n 🛠️ *OBSERVAÇÕES GERAIS / AVARIAS:*\n${observacoesGerais}\n`;
             }
             
             mensagem += `\n🙏🏻 *Bom trabalho a todos!*`;
