@@ -30,6 +30,10 @@
             --text: #333333;
             --card-bg: #ffffff;
             --edit-color: #00796B;
+            --whatsapp-color: #25D366;
+            --whatsapp-dark: #128C7E;
+            --ponto-color: #ff5722; /* Roxo para o botão da folha de ponto */
+            --ponto-dark: #7B1FA2;
         }
         body {
             font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -101,13 +105,13 @@
             top: 0;
             z-index: 999;
             background: var(--light-gray);
-            padding: 10px 0;
+            padding: 8px 0;
             max-width: 900px;
             margin: 0 auto 5px;
             text-align: right;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 5px;
             justify-content: flex-end;
             border-radius: 5px;
         }
@@ -115,20 +119,23 @@
         .toolbar button {
             color: #fff;
             border: none;
-            padding: 10px 14px;
+            padding: 6px 10px;
             border-radius: 5px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
             cursor: pointer;
             box-shadow: 0 2px 5px rgba(0,0,0,0.10);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
+            white-space: nowrap;
         }
         .btn-print { background: var(--primary-color); }
         .btn-print:hover { background: var(--primary-dark); }
         .btn-email { background: var(--secondary-color); }
         .btn-email:hover { background: var(--secondary-dark); }
+        .btn-whatsapp { background: var(--whatsapp-color); }
+        .btn-whatsapp:hover { background: var(--whatsapp-dark); }
         .btn-save { background: var(--success); }
         .btn-save:hover { background: #3d8b40; }
         .btn-history { background: #795548; }
@@ -139,6 +146,10 @@
         .btn-trends:hover { background: #00796B; }
         .btn-toggle-details { background: #607D8B; }
         .btn-toggle-details:hover { background: #455A64; }
+        .btn-backup { background: #9C27B0; }
+        .btn-backup:hover { background: #7B1FA2; }
+        .btn-ponto { background: var(--ponto-color); } /* Novo estilo para o botão Folha de Ponto */
+        .btn-ponto:hover { background: var(--ponto-dark); }
         
         /* Botão flutuante para alternar a barra */
         .fab-toggle {
@@ -198,6 +209,13 @@
         .required-field {
             border: 2px solid var(--primary-color) !important;
             background-color: #fff2f2;
+        }
+        
+        /* Indicador de campo obrigatório */
+        .required-label::after {
+            content: " *";
+            color: var(--danger);
+            font-weight: bold;
         }
         
         /* Status counters */
@@ -264,6 +282,73 @@
         .photo-upload { margin: 10px 0; }
         .photo-preview { max-width: 200px; max-height: 200px; margin: 5px; border-radius: 5px; }
         
+        /* Estilos para preview de arquivos */
+        .file-item {
+            display: inline-block;
+            margin: 8px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center;
+            width: 150px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .file-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .photo-preview {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .file-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+        }
+
+        .file-info {
+            margin-top: 5px;
+        }
+
+        .file-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+        }
+
+        .file-size {
+            font-size: 10px;
+            color: #666;
+        }
+
+        /* Melhorias no container de preview */
+        #previewFotosGerais {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            min-height: 50px;
+            padding: 8px;
+            border: 1px dashed #ddd;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+        
         /* Histórico */
         .history-item { padding: 10px; border: 1px solid var(--medium-gray); margin: 5px 0; border-radius: 5px; cursor: pointer; background-color: var(--light-gray); }
         .history-item:hover { background-color: var(--medium-gray); }
@@ -328,23 +413,22 @@
             min-width: 70px !important;
             max-width: 70px !important;
             padding: 0 !important;
-            overflow: hidden;
         }
         
-        /* Ajustar o checkbox para caber no espaço reduzido */
+        /* Ajustar o checkbox para caber no espaço reduzido em mobile */
         #inspection-table input[type="checkbox"] {
-            width: 16px !important;
-            height: 16px !important;
+            width: 12px !important;
+            height: 12px !important;
             margin: 2px !important;
         }
         
-        /* Ajustar o select de status para caber no espaço reduzido */
+        /* Ajustar o select de status para caber no espaço reduzido em mobile */
         #inspection-table select.status-select {
             width: 66px !important;
             height: 20px !important;
-            font-size: 11px !important;
+            font-size: 10px !important;
             padding: 0 2px !important;
-            margin: 0 !important;
+            margin: 2px !important;
         }
         
         /* Colunas responsivas: 3 e 5 */
@@ -364,14 +448,17 @@
         }
         
         #inspection-table input.obs-input { 
-            padding: 1px 2px !important; 
+            padding: 2px 2px !important; 
             font-size: 13px !important; 
             box-sizing: border-box !important;
         }
         
         /* Compactar outras tabelas (Dados básicos e Dados da Viatura) */
         .compact-table { font-size: 13px; }
-        .compact-table th, .compact-table td { padding: 1px 2px; line-height: 1.3; }
+        .compact-table th, .compact-table td { 
+            padding: 3px 4px !important; 
+            line-height: 1.1 !important; 
+        }
         .compact-table th { white-space: nowrap; }
         .compact-table input[type="text"],
         .compact-table input[type="date"],
@@ -380,11 +467,19 @@
         .compact-table select,
         .compact-table textarea {
             font-size: 13px;
-            padding: 2px 3px;
-            height: 28px;
+            padding: 3px 4px !important;
+            height: auto !important;
+            min-height: 10px !important;
+            box-sizing: border-box;
         }
+        /* Adicione esta regra abaixo para aumentar o tipo de plantão */
+#tipoPlantao {
+    width: 100% !important;
+    min-width: 200px !important;
+}
+        
         .compact-table input[type="radio"] { margin-right: 2px; }
-        .compact-table input[type="radio"] + label { margin-right: 5px; font-size: 13px; }
+        .compact-table input[type="radio"] + label { margin-right: 3px; font-size: 13px; }
         
         /* Área de observações */
         #observacoesAvarias { font-size: 13px; }
@@ -427,6 +522,81 @@
             background-color: var(--warning);
             border-radius: 4px;
             margin-top: 5px;
+        }
+        
+        /* Estilos para o modal de backup */
+        .backup-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .backup-option {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .backup-option h3 {
+            margin-top: 0;
+            color: #9C27B0;
+        }
+
+        .backup-option p {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .backup-status {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+            min-height: 30px;
+        }
+
+        .backup-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f7ff;
+            border-radius: 8px;
+            border-left: 4px solid #1976d2;
+        }
+
+        .backup-info h4 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+
+        .backup-info ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        .backup-info li {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .success-message {
+            padding: 10px;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .error-message {
+            padding: 10px;
+            background-color: #ffebee;
+            color: #c62828;
+            border-radius: 5px;
+            margin: 10px 0;
         }
         
         /* ===== MELHORIAS DE LAYOUT ===== */
@@ -566,7 +736,7 @@
             #inspection-table input[type="checkbox"] {
                 width: 14px !important;
                 height: 14px !important;
-                margin: 1px !important;
+                margin: 2px !important;
             }
             
             /* Ajustar o select de status para caber no espaço reduzido em mobile */
@@ -574,8 +744,8 @@
                 width: 56px !important;
                 height: 18px !important;
                 font-size: 10px !important;
-                padding: 0 1px !important;
-                margin: 0 !important;
+                padding: 1 1px !important;
+                margin: 2 !important;
             }
             
             #inspection-table th:nth-child(3),
@@ -629,6 +799,23 @@
             #inspection-table td:nth-child(3) {
                 white-space: normal;
                 overflow: visible;
+            }
+            
+            /* Aumentar a largura da coluna Status na impressão */
+            #inspection-table th:nth-child(4),
+            #inspection-table td:nth-child(4) {
+                width: 90px !important;
+                min-width: 90px !important;
+                max-width: 90px !important;
+                white-space: normal !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+            }
+            
+            /* Ajustar o select de status para impressão */
+            #inspection-table select.status-select {
+                width: 86px !important;
+                font-size: 9px !important;
             }
         }
         
@@ -742,9 +929,128 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        
+        /* Estilo para botão de cópia */
+        .btn-copy {
+            background-color: #607D8B;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 2px 8px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-copy:hover {
+            background-color: #455A64;
+        }
+        
+        /* Estilos para a mensagem temporária */
+        .temporary-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1003;
+            padding: 10px;
+            display: none; /* Inicialmente oculto */
+        }
+        .temporary-message.show {
+            display: block;
+        }
+        .temporary-message-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .temporary-message-close {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+        .temporary-message-body {
+            display: flex;
+            align-items: center;
+        }
+        .temporary-message-text {
+            flex: 1;
+            padding-right: 15px;
+        }
+        .temporary-message-text h3 {
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+        }
+        .temporary-message-text p {
+            margin: 0 0 10px 0;
+        }
+        .temporary-message-link {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .temporary-message-link:hover {
+            background-color: var(--primary-dark);
+        }
+        .temporary-message-image {
+            width: 100px;
+            height: 100px;
+        }
+        .temporary-message-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        /* Ajuste para dispositivos móveis */
+        @media (max-width: 768px) {
+            .temporary-message-body {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .temporary-message-text {
+                padding-right: 0;
+                padding-bottom: 10px;
+            }
+            
+            .temporary-message-image {
+                width: 80px;
+                height: 80px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Mensagem temporária -->
+    <div id="temporaryMessage" class="temporary-message">
+        <div class="temporary-message-content">
+            <button class="temporary-message-close" onclick="closeTemporaryMessage()">&times;</button>
+            <div class="temporary-message-body">
+                <div class="temporary-message-text">
+                    <h3>Aviso Importante</h3>
+                    <p>1° Encontro dos Motoristas de Ambulância 🚑 do Estado do Maranhão.<br>
+                    📍 Local: Auditório do hospital Nina Rodrigues nos dias 18 e 19 de Setembro aparti das 9hs.</p>
+                    <a href="https://iili.io/KuqczWF.md.jpg" target="_blank" class="temporary-message-link">Saiba mais</a>
+                </div>
+                <div class="temporary-message-image">
+                    <a href="https://iili.io/KuqczWF.md.jpg"><img src="https://iili.io/KuqczWF.md.jpg" alt="KuqczWF.md.jpg" border="0"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <!-- Indicador de carregamento -->
     <div id="loadingIndicator" class="loading-indicator"></div>
     
@@ -778,7 +1084,7 @@
                 <h2>Funcionalidades Principais</h2>
                 <h3>📝 Registro de Dados</h3>
                 <ul>
-                    <li>Informações básicas (hospital, data, horários, condutores)</li>
+                    <li>Informações básicas (hospital, data, tipo de plantão, horários, condutores)</li>
                     <li>Dados da viatura (placa, quilometragem, combustível, etc.)</li>
                     <li>Validação automática de placa brasileira</li>
                 </ul>
@@ -793,7 +1099,7 @@
                 
                 <h3>🛠️ Recursos Avançados</h3>
                 <ul>
-                    <li>Upload de fotos (opcional)</li>
+                    <li>Upload de fotos e arquivos (opcional)</li>
                     <li>Armazenamento local</li>
                     <li>Histórico de check-lists anteriores</li>
                     <li>Relatórios de tendência</li>
@@ -820,13 +1126,18 @@
     
     <!-- Barra de ferramentas melhorada (oculta por padrão) -->
     <div class="toolbar no-print hidden">
-        <button class="btn-print" onclick="window.print()"><span>🖨️</span> Imprimir</button>
-        <button class="btn-email" onclick="enviarPorEmail()"><span>✉️</span> E-mail</button>
-        <button class="btn-save" onclick="salvarDados()"><span>💾</span> Salvar</button>
-        <button class="btn-history" onclick="abrirHistorico()"><span>📋</span> Histórico</button>
-        <button class="btn-trends" onclick="abrirRelatorioTendencia()"><span>📈</span> Tendências</button>
-        <button id="btnBatchEdit" class="btn-edit" onclick="toggleBatchEdit()"><span>📝</span> Edição em Lote</button>
-        <button id="btnToggleDetails" class="btn-toggle-details" onclick="toggleDetailsSections()"><span>👁️</span> <span id="btnToggleDetailsText">Ocultar Detalhes</span></button>
+        <button class="btn-print" onclick="window.print()" title="Imprimir (Ctrl+P)">🖨️ Imprimir</button>
+        <button class="btn-email" onclick="enviarPorEmail()" title="E-mail (Ctrl+E)">✉️ E-mail</button>
+        <button class="btn-whatsapp" onclick="enviarPorWhatsApp()" title="WhatsApp (Ctrl+W)">📱 Whatts</button>
+        <button class="btn-history" onclick="abrirHistorico()" title="Histórico">📋 Histórico</button>
+        <button class="btn-trends" onclick="abrirRelatorioTendencia()" title="Tendências">📈 Top 10</button>
+        <button id="btnBatchEdit" class="btn-edit" onclick="toggleBatchEdit()" title="Edição em Lote">📝 Edição em Lote</button> 
+        <button id="btnToggleDetails" class="btn-toggle-details" onclick="toggleDetailsSections()" title="Ocultar/Mostrar Detalhes (Ctrl+D)">
+            <span>👁️ Ocultar</span>
+        </button>
+        <button class="btn-backup" onclick="abrirBackup()" title="Backup">💾 Backup</button>
+        <!-- Novo botão para Folha de Ponto -->
+        <button class="btn-ponto" onclick="abrirFolhaPonto()" title="Folha de Ponto">📄 Folha de Ponto</button>
         <span id="saveIndicator" class="save-indicator"></span>
     </div>
     
@@ -864,7 +1175,7 @@
         <div class="status-counters no-print">
             <div class="status-counter status-ok">✅ OK: <span id="count-ok">0</span></div>
             <div class="status-counter status-ruim">⚠️ (R) Ruim: <span id="count-ruim">0</span></div>
-            <div class="status-counter status-quebrado">🛠️ (Q) Quebrado: <span id="count-quebrado">0</span></div>
+            <div class="status-counter status-quebrado">🛠️  (Q) Quebrado: <span id="count-quebrado">0</span></div>
             <div class="status-counter status-faltando">❌ (F) Faltando: <span id="count-faltando">0</span></div>
             <div class="status-counter status-parar">🚨 (P) Parar VTR: <span id="count-parar">0</span></div>
         </div>
@@ -877,9 +1188,10 @@
                 <option value=""></option>
                 <option value="✅ OK">✅ OK</option>
                 <option value="⚠️ Ruim">⚠️ Ruim</option>
-                <option value="🛠️ Quebrado">🛠️ Quebrado</option>
+                <option value="🛠️  Quebrado">🛠️  Quebrado</option>
                 <option value="❌ Faltando">❌ Faltando</option>
-<option value="🚨 Parar VTR" title="Item crítico: veículo não deve operar">🚨 (P)</option>            </select>
+                <option value="🚨 Parar VTR" title="Item crítico: veículo não deve operar">🚨 (P)</option>
+            </select>
             <button onclick="aplicarEdicaoEmLote()">Aplicar aos itens selecionados</button>
             <button onclick="selecionarTodosItens()">Selecionar todos</button>
             <button onclick="desselecionarTodosItens()">Desselecionar todos</button>
@@ -890,53 +1202,66 @@
         
         <!-- Tabela Dados Básicos -->
         <table class="compact-table details-section">
-            <tr><td><strong>🏥 Hospital:</strong></td><td><input type="text" id="hospital" placeholder="Hospital Raimundo Lima"></td></tr>
-            <tr><td><strong>📆 Data:</strong></td><td><input type="date" id="data"></td></tr>
-            <tr><td><strong>⏰ Horário de Entrada:</strong></td><td><input type="time" id="horarioEntrada" value="07:00"></td></tr>
-            <tr><td><strong>⏰ Horário de Saída:</strong></td><td><input type="time" id="horarioSaida" value="19:00"></td></tr>
-            <tr><td><strong>🙋 Condutor de Plantão:</strong></td><td><input type="text" id="condutorPlantao" placeholder="Nome completo"></td></tr>
-            <tr><td><strong>🫂 Recebendo de:</strong></td><td><input type="text" id="recebendoDe" placeholder="Nome do condutor anterior"></td></tr>
+            <tr><th><strong class="required-label">🏥 Hospital:</strong></th><td><input type="text" id="hospital" placeholder="Hospital Raimundo Lima" required></td></tr>
+            <tr><th><strong class="required-label">📆 Data:</strong></th><td><input type="date" id="data" required></td></tr>
+            <tr><th><strong class="required-label">⏱️ Plantão:</strong></th>
+                <td>
+                    <select id="tipoPlantao" required>
+                        <option value="">Selecione...</option>
+                        <option value="SD 12hs">SD 12hs</option>
+                        <option value="SN 12hs">SN 12hs</option>
+                        <option value="DN 24hs">DN 24hs</option>
+                        <option value="Extra SD 12hs">Extra SD 12hs</option>
+                        <option value="Extra SN 12hs">Extra SN 12hs</option>
+                        <option value="Extra DN 24hs">Extra DN 24hs</option>
+                    </select>
+                </td>
+            </tr>
+            <tr><th><strong class="required-label">⏰ Horário de Entrada:</strong></th><td><input type="time" id="horarioEntrada" value="07:00" required></td></tr>
+            <tr><th><strong class="required-label">⏰ Horário de Saída:</strong></th><td><input type="time" id="horarioSaida" value="19:00" required></td></tr>
+            <tr><th><strong class="required-label">🙋 Condutor de Plantão:</strong></th><td><input type="text" id="condutorPlantao" placeholder="Nome completo" required></td></tr>
+            <tr><th><strong class="required-label">🫂 Recebendo de:</strong></th><td><input type="text" id="recebendoDe" placeholder="Nome do condutor anterior" required></td></tr>
         </table>
         
         <h2 class="details-section">🚑 DADOS DA VIATURA (BASICA / USA)</h2>
         <table class="compact-table details-section">
             <tr><th>Item</th><th>Informação</th></tr>
             <tr>
-                <td><strong>Ambulância</strong></td>
+                <th><strong class="required-label">Ambulância</strong></th>
                 <td>
-                    <input type="radio" id="ambulanciaBasica" name="ambulanciaStatus" value="BÁSICA"> 
+                    <input type="radio" id="ambulanciaBasica" name="ambulanciaStatus" value="BÁSICA" required> 
                     <label for="ambulanciaBasica">BÁSICA</label>
                     <input type="radio" id="ambulanciaUSA" name="ambulanciaStatus" value="USA"> 
                     <label for="ambulanciaUSA">USA / UTI</label>
-                </td>
-            </tr>
-            <tr><td><strong>Placa</strong></td><td><input type="text" id="placa" placeholder="Ex: ABC1234 ou ABC1D23" onblur="validarPlaca()"></td></tr>
-            <tr><td><strong>Km Atual</strong></td><td><input type="number" id="kmAtual" placeholder="Ex: 337847"></td></tr>
-            <tr><td><strong>Nível de Combustível</strong></td><td><input type="text" id="nivelCombustivel" placeholder="Ex: 5/10 traços ou 1/2 tanque"></td></tr>
-            <tr><td><strong>CRV Válido até</strong></td><td><input type="number" id="crvValido" placeholder="Ano (ex: 2024)"></td></tr>
-            <tr><td><strong>Próxima Troca de Óleo km</strong></td><td><input type="number" id="proximaTrocaOleo" placeholder="Km da próxima troca"></td></tr>
+                 </td>
+             </tr>
+            <tr><th><strong class="required-label">Placa</strong></th><td><input type="text" id="placa" placeholder="Ex: ABC1234 ou ABC1D23" onblur="validarPlaca()" required></td></tr>
+            <tr><th><strong class="required-label">Km Atual</strong></th><td><input type="number" id="kmAtual" placeholder="Ex: 337847" required></td></tr>
+            <tr><th><strong class="required-label">Nível de Combustível</strong></th><td><input type="text" id="nivelCombustivel" placeholder="Ex: 5/10 traços ou 1/2 tanque" required></td></tr>
+            <tr><th><strong class="required-label">CRV Válido até</strong></th><td><input type="number" id="crvValido" placeholder="Ano (ex: 2024)" required></td></tr>
+            <tr><th><strong class="required-label">Próxima Troca de Óleo km</strong></th><td><input type="number" id="proximaTrocaOleo" placeholder="Km da próxima troca" required></td></tr>
             <tr>
-                <td><strong>Cartão de Abastecimento</strong></td>
+                <th><strong class="required-label">Cartão de Abastecimento</strong></th>
                 <td>
-                    <input type="radio" id="cartaoDisponivel" name="cartaoStatus" value="Disponível"> 
+                    <input type="radio" id="cartaoDisponivel" name="cartaoStatus" value="Disponível" required> 
                     <label for="cartaoDisponivel">Disponível</label>
                     <input type="radio" id="cartaoNaoDisponivel" name="cartaoStatus" value="Não Disponível"> 
                     <label for="cartaoNaoDisponivel">Não Disponível</label>
-                </td>
-            </tr>
-        </table>
+                 </td>
+             </tr>
+         </table>
         
         <!-- Localização -->
         <div id="localizacao" class="location-info no-print details-section"></div>
         
-        <h2>🛠️ STATUS DE INSPEÇÃO</h2>
-        <p><em>Selecione o status: ✅ OK | ⚠️ (R) Ruim | 🛠️(Q) Quebrado | ❌ (F) Faltando | 🚨 (P) Parar VTR</em></p>
+        <h2>📋 STATUS DE INSPEÇÃO</h2>
+        <p><em>Selecione o status: ✅ OK | ⚠️ (R) Ruim | 🛠️ (Q) Quebrado | ❌ (F) Faltando | 🚨 (P) Parar VTR</em></p>
         <table id="inspection-table">
             <thead>
                 <tr>
                     <th class="no-print"><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)"></th>
                     <th>#</th><th>Item</th><th>Status</th><th>Observação</th>
-                </tr>
+                 </tr>
             </thead>
             <tbody>
                 <!-- Itens gerados via JS -->
@@ -946,10 +1271,10 @@
         <h2>🛠️ OBSERVAÇÕES GERAIS / AVARIAS</h2>
         <textarea id="observacoesAvarias" rows="8" style="width: 100%;" placeholder="Digite suas observações aqui. Use Enter para quebrar linhas."></textarea>
         
-        <!-- Upload de fotos gerais -->
+        <!-- Upload de fotos e arquivos -->
         <div class="photo-upload no-print">
-            <label for="fotosGerais"><strong>📷 Fotos Gerais (opcional):</strong></label>
-            <input type="file" id="fotosGerais" accept="image/*" multiple capture="camera">
+            <label for="fotosGerais"><strong>📷 Fotos e Arquivos (opcional):</strong></label>
+            <input type="file" id="fotosGerais" accept="image/*, .pdf, .doc, .docx, .xls, .xlsx, .txt" multiple>
             <div id="previewFotosGerais"></div>
         </div>
         
@@ -991,9 +1316,50 @@
             <span class="close" onclick="fecharBackup()">&times;</span>
             <h2>☁️ Backup de Dados</h2>
             <p>Faça backup dos seus check-lists para não perder seus dados.</p>
-            <button onclick="fazerBackup()">📦 Fazer Backup</button>
-            <button onclick="restaurarBackup()">🔄 Restaurar Backup</button>
-            <div id="statusBackup"></div>
+            
+            <div class="backup-options">
+                <div class="backup-option">
+                    <h3>📦 Fazer Backup</h3>
+                    <p>Baixe todos os seus check-lists em um arquivo JSON.</p>
+                    <button onclick="fazerBackup()" class="btn-backup">Fazer Backup Agora</button>
+                </div>
+                
+                <div class="backup-option">
+                    <h3>🔄 Restaurar Backup</h3>
+                    <p>Carregue um arquivo de backup anterior para restaurar seus dados.</p>
+                    <button onclick="restaurarBackup()" class="btn-backup">Restaurar Backup</button>
+                </div>
+            </div>
+            
+            <div id="statusBackup" class="backup-status"></div>
+            
+            <div class="backup-info">
+                <h4>ℹ️ Informações Importantes</h4>
+                <ul>
+                    <li>O backup contém todos os seus check-lists salvos localmente</li>
+                    <li>Recomendamos fazer backup regularmente</li>
+                    <li>Guarde o arquivo de backup em um local seguro</li>
+                    <li>Ao restaurar, todos os dados atuais serão substituídos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Alternativa WhatsApp -->
+    <div id="modalWhatsApp" class="modal no-print">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModalWhatsApp()">&times;</span>
+            <h2>📱 Alternativa para WhatsApp</h2>
+            <p>Não foi possível abrir o WhatsApp diretamente. Use uma das opções abaixo:</p>
+            <div style="margin: 2px 0;">
+                <button onclick="abrirWhatsAppWeb()" class="btn-whatsapp" style="width: 100%; margin-bottom: 10px;">
+                    <span>🌐</span> Abrir WhatsApp Web
+                </button>
+                <button onclick="copiarMensagemWhatsApp()" class="btn-copy" style="width: 100%; margin-bottom: 10px;">
+                    <span>📋</span> Copiar Mensagem
+                </button>
+            </div>
+            <div id="mensagemWhatsAppPreview" style="background: #f5f5f5; padding: 10px; border-radius: 5px; max-height: 250px; overflow-y: auto; font-size: 12px; white-space: pre-wrap;"></div>
         </div>
     </div>
     
@@ -1005,6 +1371,7 @@
         <strong>Atalhos de teclado:</strong><br>
         Ctrl+S - Salvar<br>
         Ctrl+E - Enviar por e-mail<br>
+        Ctrl+W - Enviar por WhatsApp<br>
         Ctrl+P - Imprimir<br>
         Ctrl+F - Buscar<br>
         Ctrl+B - Mostrar/Ocultar barra<br>
@@ -1037,7 +1404,7 @@
             { name: "Farol de embarque" },
             { name: "Freio de estacionamento" },
             { name: "Pastilhas de freio (dianteira/traseira)" },
-            { name: "Pneus" },
+            { name: "Pneus/Estepe" },
             { name: "Macaco, chave de roda, triângulo" },
             { name: "Limpadores/palhetas do para-brisa" },
             { name: "Limpeza interna" },
@@ -1073,10 +1440,9 @@
             { name: "Baú do salão" },
             { name: "Painel de controle do salão" }
         ];
-
         // Itens críticos por tipo de ambulância
         const criticalItemsByType = {
-                "BÁSICA": [
+            "BÁSICA": [
                 "Óleo do motor",
                 "Óleo hidráulico (caixa de direção)",
                 "Fluido do radiador",
@@ -1094,7 +1460,7 @@
                 "Luzes internas",
                 "Freio de estacionamento",
                 "Pastilhas de freio (dianteira/traseira)",
-                "Pneus",
+                "Pneus/Estepe",
                 "Macaco, chave de roda, triângulo",
                 "Extintor de incêndio",
                 "Cilindro de oxigênio fixo (01)",
@@ -1126,7 +1492,7 @@
                 "Luzes internas",
                 "Freio de estacionamento",
                 "Pastilhas de freio (dianteira/traseira)",
-                "Pneus",
+                "Pneus/Estepe",
                 "Macaco, chave de roda, triângulo",
                 "Extintor de incêndio",
                 "Cilindro de oxigênio fixo (01)",
@@ -1164,6 +1530,28 @@
         let dadosModificados = false;
         let db;
         let pendingExitAction = null;
+        let mensagemWhatsAppAtual = '';
+        
+        // Variável de controle para ativar/desativar a mensagem temporária
+        const SHOW_TEMPORARY_MESSAGE = true; // Altere para false para desativar
+        
+        // ========== FUNÇÃO AUXILIAR PARA FORMATAR ITENS (ÍCONE ANTES DO NOME) ==========
+        function formatarItemParaExibicao(item) {
+            const statusMap = {
+                "✅ OK": { icon: "✅", text: "OK" },
+                "⚠️ Ruim": { icon: "⚠️", text: "Ruim" },
+                "🛠️  Quebrado": { icon: "🛠️", text: "Quebrado" },
+                "❌ Faltando": { icon: "❌", text: "Faltando" },
+                "🚨 Parar VTR": { icon: "🚨", text: "Parar VTR" }
+            };
+            // Se o status não estiver mapeado (ex: vazio ou não avaliado), usa fallback
+            const statusInfo = statusMap[item.status] || { icon: "", text: item.status || "Não avaliado" };
+            let linha = `${statusInfo.icon} ${item.item}: ${statusInfo.text}`;
+            if (item.obs && item.obs !== '---') {
+                linha += `   Obs: ${item.obs}`;
+            }
+            return linha;
+        }
         
         // Inicializar IndexedDB
         function initIndexedDB() {
@@ -1310,6 +1698,16 @@
             document.getElementById('welcomeModal').style.display = 'none';
         }
         
+        // Função para fechar a mensagem temporária
+        function closeTemporaryMessage() {
+            const messageElement = document.getElementById('temporaryMessage');
+            if (messageElement) {
+                messageElement.classList.remove('show');
+                // Salvar preferência do usuário
+                localStorage.setItem('temporaryMessageClosed', 'true');
+            }
+        }
+        
         // Validação de placa brasileira
         function validarPlaca() {
             const placaInput = document.getElementById("placa");
@@ -1379,7 +1777,7 @@
                 <option value=""></option>
                 <option value="✅ OK">✅ OK</option>
                 <option value="⚠️ Ruim">⚠️ (R)</option>
-                <option value="🛠️ Quebrado">🛠 (Q)</option>
+                <option value="🛠️  Quebrado">🛠️ (Q)</option>
                 <option value="❌ Faltando">❌ (F)</option>
                 <option value="🚨 Parar VTR">🚨 (P)</option>
             `;
@@ -1483,14 +1881,14 @@
         }
         
         function updateStatusCounters() {
-            const counters = { '✅ OK': 0, '⚠️ Ruim': 0, '🛠️ Quebrado': 0, '❌ Faltando': 0, '🚨 Parar VTR': 0 };
+            const counters = { '✅ OK': 0, '⚠️ Ruim': 0, '🛠️  Quebrado': 0, '❌ Faltando': 0, '🚨 Parar VTR': 0 };
             document.querySelectorAll('.status-select').forEach(select => {
                 if (select.value && counters[select.value] !== undefined) counters[select.value]++;
             });
             
             document.getElementById('count-ok').textContent = counters['✅ OK'];
             document.getElementById('count-ruim').textContent = counters['⚠️ Ruim'];
-            document.getElementById('count-quebrado').textContent = counters['🛠️ Quebrado'];
+            document.getElementById('count-quebrado').textContent = counters['🛠️  Quebrado'];
             document.getElementById('count-faltando').textContent = counters['❌ Faltando'];
             document.getElementById('count-parar').textContent = counters['🚨 Parar VTR'];
         }
@@ -1573,6 +1971,7 @@
                 const dados = {
                     hospital: document.getElementById("hospital").value,
                     data: document.getElementById("data").value,
+                    tipoPlantao: document.getElementById("tipoPlantao").value,
                     horarioEntrada: document.getElementById("horarioEntrada").value,
                     horarioSaida: document.getElementById("horarioSaida").value,
                     condutorPlantao: document.getElementById("condutorPlantao").value,
@@ -1657,6 +2056,7 @@
                 // Preencher formulário
                 document.getElementById("hospital").value = dados.hospital || '';
                 document.getElementById("data").value = dados.data || '';
+                document.getElementById("tipoPlantao").value = dados.tipoPlantao || '';
                 document.getElementById("horarioEntrada").value = dados.horarioEntrada || '';
                 document.getElementById("horarioSaida").value = dados.horarioSaida || '';
                 document.getElementById("condutorPlantao").value = dados.condutorPlantao || '';
@@ -1754,6 +2154,7 @@
                            <strong>VTR :</strong> ${item.dados.ambulanciaStatus || 'Não informado'}<br>
                             <strong>Placa:</strong> ${item.dados.placa}<br>
                             <strong>Data:</strong> ${item.dados.data}<br>
+                            <strong>Plantão:</strong> ${item.dados.tipoPlantao || 'Não informado'}<br>
                             <strong>Condutor:</strong> ${item.dados.condutorPlantao}<br>
                             <small>Salvo em: ${new Date(item.dados.timestamp || 0).toLocaleString()}</small>
                         `;
@@ -1801,7 +2202,21 @@
         }
         
         function validateForm() {
-            const required = ["hospital", "data", "condutorPlantao", "placa", "kmAtual"];
+            // Campos obrigatórios atualizados
+            const required = [
+                "hospital", 
+                "data", 
+                "tipoPlantao", 
+                "horarioEntrada", 
+                "horarioSaida", 
+                "condutorPlantao", 
+                "recebendoDe",
+                "placa", 
+                "kmAtual", 
+                "nivelCombustivel", 
+                "crvValido", 
+                "proximaTrocaOleo"
+            ];
             const today = new Date(); today.setHours(0,0,0,0);
             const dataInput = document.getElementById("data").value;
             const dataCheck = new Date(dataInput); dataCheck.setHours(0,0,0,0);
@@ -1813,6 +2228,28 @@
                 const el = document.getElementById(id);
                 if (!el.value.trim()) { isValid = false; el.classList.add("required-field"); }
             });
+            
+            // Verificar se o tipo de plantão foi selecionado
+            const tipoPlantao = document.getElementById("tipoPlantao");
+            if (!tipoPlantao.value) {
+                isValid = false;
+                tipoPlantao.classList.add("required-field");
+                showNotification("Selecione o plantão.", "error");
+            }
+            
+            // Verificar se o tipo de ambulância foi selecionado
+            const ambulanciaStatus = document.querySelector('input[name="ambulanciaStatus"]:checked');
+            if (!ambulanciaStatus) {
+                isValid = false;
+                showNotification("Selecione o tipo de ambulância (BÁSICA ou USA).", "error");
+            }
+            
+            // Verificar se o status do cartão foi selecionado
+            const cartaoStatus = document.querySelector('input[name="cartaoStatus"]:checked');
+            if (!cartaoStatus) {
+                isValid = false;
+                showNotification("Selecione o status do cartão de abastecimento.", "error");
+            }
             
             // Obter o tipo de ambulância selecionado
             const selectedAmbulance = document.querySelector('input[name="ambulanciaStatus"]:checked');
@@ -1841,6 +2278,7 @@
             const dadosCabecalho = {
                 hospital: document.getElementById("hospital").value,
                 data: dataFormatada,
+                tipoPlantao: document.getElementById("tipoPlantao").value,
                 horarioEntrada: document.getElementById("horarioEntrada").value,
                 horarioSaida: document.getElementById("horarioSaida").value,
                 condutorPlantao: document.getElementById("condutorPlantao").value,
@@ -1887,7 +2325,7 @@
             const itensAgrupados = {
                 '✅ OK': [],
                 '⚠️ Ruim': [],
-                '🛠️ Quebrado': [],
+                '🛠️  Quebrado': [],
                 '❌ Faltando': [],
                 '🚨 Parar VTR': []
             };
@@ -1897,6 +2335,23 @@
                     itensAgrupados[item.status].push(item);
                 }
             });
+            
+            // Função auxiliar para formatar linha do item (ícone antes do nome)
+            const formatarItemEmail = (item) => {
+                const statusMap = {
+                    "✅ OK": { icon: "✅", text: "OK" },
+                    "⚠️ Ruim": { icon: "⚠️", text: "Ruim" },
+                    "🛠️  Quebrado": { icon: "🛠️", text: "Quebrado" },
+                    "❌ Faltando": { icon: "❌", text: "Faltando" },
+                    "🚨 Parar VTR": { icon: "🚨", text: "Parar VTR" }
+                };
+                const info = statusMap[item.status] || { icon: "", text: item.status || "Não avaliado" };
+                let linha = `${info.icon} ${item.item}: ${info.text}`;
+                if (item.obs && item.obs !== '---') {
+                    linha += `   Obs: ${item.obs}`;
+                }
+                return linha;
+            };
             
             const corpoEmail = `
 ==============================================================================
@@ -1909,6 +2364,8 @@
 INFORMAÇÕES BÁSICAS
 ==============================================================================
 Hospital: ${dadosCabecalho.hospital}
+Data: ${dadosCabecalho.data}
+Plantão: ${dadosCabecalho.tipoPlantao}
 Condutor de Plantão: ${dadosCabecalho.condutorPlantao}
 Recebendo de: ${dadosCabecalho.recebendoDe}
 Horário de Entrada: ${dadosCabecalho.horarioEntrada}
@@ -1916,32 +2373,32 @@ Horário de Saída: ${dadosCabecalho.horarioSaida}
 Localização: ${localizacaoInfo}
 DADOS DA VIATURA
 ==============================================================================
-VTRT: ${dadosViatura.ambulanciaStatus}
+VTR: ${dadosViatura.ambulanciaStatus}
 Placa: ${dadosViatura.placa}
-Km Atual: ${dadosViatura.kmAtual} km
+Km Atual: ${dadosViatura.kmAtual}
 Nível de Combustível: ${dadosViatura.nivelCombustivel}
 CRV Válido até: ${dadosViatura.crvValido}
-Próxima Troca de Óleo: ${dadosViatura.proximaTrocaOleo} km
+Km Próxima Troca de Óleo: ${dadosViatura.proximaTrocaOleo}
 Cartão de Abastecimento: ${dadosViatura.cartaoStatus}
 ITENS DE INSPEÇÃO
 ==============================================================================
 ITENS COM STATUS ✅ OK (${itensAgrupados['✅ OK'].length} itens)
-${itensAgrupados['✅ OK'].map(item => `• ${item.num}. ${item.item}`).join('\n')}
+${itensAgrupados['✅ OK'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ${itensAgrupados['⚠️ Ruim'].length > 0 ? `
 ITENS COM STATUS ⚠️ RUIM (${itensAgrupados['⚠️ Ruim'].length} itens)
-${itensAgrupados['⚠️ Ruim'].map(item => `• ${item.num}. ${item.item} - Obs: ${item.obs}`).join('\n')}
+${itensAgrupados['⚠️ Ruim'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ` : ''}
-${itensAgrupados['🛠️ Quebrado'].length > 0 ? `
-ITENS COM STATUS 🛠️ QUEBRADO (${itensAgrupados['🛠️ Quebrado'].length} itens)
-${itensAgrupados['🛠️ Quebrado'].map(item => `• ${item.num}. ${item.item} - Obs: ${item.obs}`).join('\n')}
+${itensAgrupados['🛠️  Quebrado'].length > 0 ? `
+ITENS COM STATUS 🛠️  QUEBRADO (${itensAgrupados['🛠️  Quebrado'].length} itens)
+${itensAgrupados['🛠️  Quebrado'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ` : ''}
 ${itensAgrupados['❌ Faltando'].length > 0 ? `
 ITENS COM STATUS ❌ FALTANDO (${itensAgrupados['❌ Faltando'].length} itens)
-${itensAgrupados['❌ Faltando'].map(item => `• ${item.num}. ${item.item} - Obs: ${item.obs}`).join('\n')}
+${itensAgrupados['❌ Faltando'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ` : ''}
 ${itensAgrupados['🚨 Parar VTR'].length > 0 ? `
 ITENS COM STATUS 🚨 PARAR VTR (${itensAgrupados['🚨 Parar VTR'].length} itens)
-${itensAgrupados['🚨 Parar VTR'].map(item => `• ${item.num}. ${item.item} - Obs: ${item.obs}`).join('\n')}
+${itensAgrupados['🚨 Parar VTR'].map(item => `• ${formatarItemEmail(item)}`).join('\n')}
 ` : ''}
 ${observacoesGerais ? `
 OBSERVAÇÕES GERAIS / AVARIAS
@@ -1952,11 +2409,198 @@ ${observacoesGerais}
 E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()}
 ==============================================================================`.trim();
             const assunto = `Check-list Viatura ${dadosViatura.placa} - ${dadosCabecalho.data}`;
-            // Correção: E-mail destinatário correto
             const destinatario = "lefechecklist@gmail.com";
             const mailtoLink = `mailto:${destinatario}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
             window.location.href = mailtoLink;
             showNotification("Abrindo e-mail...", "success");
+        }
+        
+        // Função para detectar se está em um WebView
+        function isWebView() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            return userAgent.includes('android') && userAgent.includes('wv') || 
+                   userAgent.includes('iphone') && userAgent.includes('webview');
+        }
+        
+        // Função para enviar por WhatsApp com fallback
+        function enviarPorWhatsApp() {
+            if (!validateForm()) return;
+            
+            const dataValue = document.getElementById("data").value;
+            const [y, m, d] = dataValue.split('-');
+            const dataFormatada = `${d}/${m}/${y}`;
+            
+            const dadosCabecalho = {
+                hospital: document.getElementById("hospital").value,
+                data: dataFormatada,
+                tipoPlantao: document.getElementById("tipoPlantao").value,
+                condutorPlantao: document.getElementById("condutorPlantao").value,
+                recebendoDe: document.getElementById("recebendoDe").value,
+                placa: document.getElementById("placa").value.toUpperCase(),
+                ambulanciaStatus: document.querySelector('input[name="ambulanciaStatus"]:checked')?.value || 'Não informado'
+            };
+            
+            // Obter horários
+            const horarioEntrada = document.getElementById("horarioEntrada").value;
+            const horarioSaida = document.getElementById("horarioSaida").value;
+            
+            // Obter dados da viatura
+            const kmAtual = document.getElementById("kmAtual").value;
+            const proximaTrocaOleo = document.getElementById("proximaTrocaOleo").value;
+            
+            // Gerar link do Google Maps se houver coordenadas
+            let localizacaoInfo = 'Localização não disponível';
+            if (coordenadasGPS && coordenadasGPS.latitude && coordenadasGPS.longitude) {
+                const lat = coordenadasGPS.latitude.toFixed(6);
+                const lon = coordenadasGPS.longitude.toFixed(6);
+                const googleMapsLink = `https://maps.google.com/?q=${lat},${lon}`;
+                localizacaoInfo = ` ${lat}, ${lon}\n*Google Maps:* ${googleMapsLink}`;
+            }
+            
+            const itensInspecao = [];
+            for (let i = 1; i <= inspectionItems.length; i++) {
+                const status = document.getElementById(`status-${i}`).value;
+                const obs = document.getElementById(`obs-${i}`).value.trim();
+                if (status || obs) {
+                    itensInspecao.push({
+                        num: i.toString().padStart(2, '0'),
+                        item: inspectionItems[i-1].name,
+                        status: status || 'Não avaliado',
+                        obs: obs || '---'
+                    });
+                }
+            }
+            
+            if (itensInspecao.length === 0) {
+                showNotification("Preencha ao menos um item de inspeção.", "warning");
+                return;
+            }
+            
+            const observacoesGerais = document.getElementById("observacoesAvarias").value;
+            
+            // Formatar a mensagem para WhatsApp (ícone antes do nome)
+            let mensagem = `📋 *CHECK-LIST DIÁRIO - LEFE*\n\n`;
+            mensagem += `🏥 *Hospital:* ${dadosCabecalho.hospital}\n`;
+            mensagem += `📆 *Data:* ${dadosCabecalho.data}\n`;
+            mensagem += `🚑 *VTR:* ${dadosCabecalho.ambulanciaStatus}   `;
+            mensagem += `*Placa:* ${dadosCabecalho.placa}\n`;
+            mensagem += `*🚑 km Atual:* ${kmAtual}\n`;
+            mensagem += `*🚑 Km Troca de Óleo:* ${proximaTrocaOleo}\n\n`;
+            mensagem += `🙋🏻 *Condutor:* ${dadosCabecalho.condutorPlantao}\n`;
+            
+            // Adicionando o campo "Recebendo de"
+            if (dadosCabecalho.recebendoDe) {
+                mensagem += `🫂 *Recebendo de:* ${dadosCabecalho.recebendoDe}\n`;
+            }
+            mensagem += `⏱️ *Plantão:* ${dadosCabecalho.tipoPlantao}\n`;
+    
+            // Adicionando horários
+            mensagem += `⏰ *Entrada:* ${horarioEntrada}  `;
+            mensagem += `*Saída:* ${horarioSaida}\n`;
+            
+            // Adicionando localização
+            mensagem += `📍 *Localização:* ${localizacaoInfo}\n\n`;
+            
+            mensagem += `📝 *ITENS DE INSPEÇÃO:*\n\n`;
+            // Usar a formatação com ícone antes do nome
+            itensInspecao.forEach(item => {
+                const formatted = formatarItemParaExibicao(item);
+                mensagem += `${formatted}\n`;
+            });
+            
+            if (observacoesGerais) {
+                mensagem += `\n 🛠️ *OBSERVAÇÕES GERAIS / AVARIAS:*\n${observacoesGerais}\n`;
+            }
+            
+            mensagem += `\n🙏🏻 *Bom trabalho a todos!*`;
+            
+            // Armazenar mensagem atual para uso posterior
+            mensagemWhatsAppAtual = mensagem;
+            
+            // Codificar a mensagem para URL
+            const mensagemCodificada = encodeURIComponent(mensagem);
+            
+            // Verificar se é um dispositivo móvel
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // Verificar se estamos em um WebView (dentro de um aplicativo)
+            const webView = isWebView();
+            
+            if (webView) {
+                // Estamos em um WebView, mostrar alternativas
+                mostrarModalWhatsApp();
+                showNotification("Abrindo alternativas para WhatsApp...", "info");
+            } else if (isMobile) {
+                // Para dispositivos móveis nativos, tentar abrir o aplicativo WhatsApp
+                const whatsappAppUrl = `whatsapp://send?text=${mensagemCodificada}`;
+                
+                // Tentar abrir o app
+                const timeoutId = setTimeout(() => {
+                    // Se o app não abrir em 500ms, mostrar alternativas
+                    mostrarModalWhatsApp();
+                }, 500);
+                
+                // Tentar abrir o app
+                window.location.href = whatsappAppUrl;
+                
+                // Se o app abrir, cancelar o timeout
+                window.addEventListener('blur', () => {
+                    clearTimeout(timeoutId);
+                }, { once: true });
+                
+                showNotification("Tentando abrir o WhatsApp...", "success");
+            } else {
+                // Para desktop, abrir a web version
+                const whatsappWebUrl = `https://web.whatsapp.com/send?text=${mensagemCodificada}`;
+                window.open(whatsappWebUrl, '_blank');
+                showNotification("Abrindo WhatsApp Web...", "success");
+            }
+        }
+        
+        // Função para mostrar o modal de alternativas do WhatsApp
+        function mostrarModalWhatsApp() {
+            const modal = document.getElementById('modalWhatsApp');
+            const preview = document.getElementById('mensagemWhatsAppPreview');
+            
+            // Exibir a mensagem no preview
+            preview.textContent = mensagemWhatsAppAtual;
+            
+            // Mostrar o modal
+            modal.style.display = 'block';
+            
+            showNotification("Não foi possível abrir o WhatsApp. Escolha uma alternativa.", "warning");
+        }
+        
+        // Função para fechar o modal de alternativas do WhatsApp
+        function fecharModalWhatsApp() {
+            document.getElementById('modalWhatsApp').style.display = 'none';
+        }
+        
+        // Função para abrir o WhatsApp Web
+        function abrirWhatsAppWeb() {
+            const mensagemCodificada = encodeURIComponent(mensagemWhatsAppAtual);
+            const whatsappWebUrl = `https://web.whatsapp.com/send?text=${mensagemCodificada}`;
+            window.open(whatsappWebUrl, '_blank');
+            fecharModalWhatsApp();
+            showNotification("Abrindo WhatsApp Web...", "success");
+        }
+        
+        // Função para copiar a mensagem para a área de transferência
+        function copiarMensagemWhatsApp() {
+            // Criar um elemento textarea temporário
+            const textarea = document.createElement('textarea');
+            textarea.value = mensagemWhatsAppAtual;
+            document.body.appendChild(textarea);
+            
+            // Selecionar e copiar o texto
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Remover o elemento temporário
+            document.body.removeChild(textarea);
+            
+            fecharModalWhatsApp();
+            showNotification("Mensagem copiada para a área de transferência!", "success");
         }
         
         function limparFormulario() {
@@ -2049,11 +2693,17 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             document.addEventListener('keydown', function(e) {
                 if (e.ctrlKey && e.key === 's') { e.preventDefault(); salvarDados(); }
                 if (e.ctrlKey && e.key === 'e') { e.preventDefault(); enviarPorEmail(); }
+                if (e.ctrlKey && e.key === 'w') { e.preventDefault(); enviarPorWhatsApp(); }
                 if (e.ctrlKey && e.key === 'p') { e.preventDefault(); window.print(); }
                 if (e.ctrlKey && e.key === 'f') { e.preventDefault(); document.getElementById('searchInput').focus(); }
                 if (e.ctrlKey && e.key.toLowerCase() === 'b') { e.preventDefault(); toggleToolbar(); }
                 if (e.ctrlKey && e.key.toLowerCase() === 'd') { e.preventDefault(); toggleDetailsSections(); }
-                if (e.key === 'Escape') { fecharHistorico(); fecharBackup(); fecharRelatorioTendencia(); }
+                if (e.key === 'Escape') { 
+                    fecharHistorico(); 
+                    fecharBackup(); 
+                    fecharRelatorioTendencia(); 
+                    fecharModalWhatsApp();
+                }
                 if (e.ctrlKey && e.key === '/') {
                     e.preventDefault();
                     document.getElementById('keyboardShortcuts').classList.toggle('show');
@@ -2107,10 +2757,10 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             toggleObservationColumn(!areHidden);
             
             if (areHidden) {
-                btnText.textContent = 'Ocultar Detalhes';
+                if (btnText) btnText.textContent = 'Ocultar Detalhes';
                 localStorage.setItem(DETAILS_HIDDEN_KEY, 'false');
             } else {
-                btnText.textContent = 'Mostrar Detalhes';
+                if (btnText) btnText.textContent = 'Mostrar Detalhes';
                 localStorage.setItem(DETAILS_HIDDEN_KEY, 'true');
             }
         }
@@ -2120,6 +2770,7 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             showLoading(true);
             
             const backupData = {};
+            let itemCount = 0;
             
             // Tentar obter dados do IndexedDB primeiro
             if (db) {
@@ -2132,6 +2783,7 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                     const cursor = event.target.result;
                     if (cursor) {
                         backupData[cursor.value.id] = cursor.value.dados;
+                        itemCount++;
                         cursor.continue();
                     } else {
                         // Se não encontrou nada no IndexedDB, tentar do localStorage
@@ -2139,7 +2791,12 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                             for (let i = 0; i < localStorage.length; i++) {
                                 const key = localStorage.key(i);
                                 if (key.startsWith('checklist_')) {
-                                    backupData[key] = JSON.parse(localStorage.getItem(key));
+                                    try {
+                                        backupData[key] = JSON.parse(localStorage.getItem(key));
+                                        itemCount++;
+                                    } catch (e) {
+                                        console.error('Erro ao parsear checklist:', e);
+                                    }
                                 }
                             }
                         }
@@ -2153,6 +2810,9 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                         linkElement.setAttribute('download', exportFileDefaultName);
                         linkElement.click();
                         
+                        const statusEl = document.getElementById('statusBackup');
+                        statusEl.innerHTML = `<div class="success-message">✅ Backup criado com sucesso! ${itemCount} check-lists incluídos.</div>`;
+                        
                         showNotification("Backup criado com sucesso!", "success");
                         showLoading(false);
                     }
@@ -2160,6 +2820,8 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                 
                 request.onerror = function(event) {
                     console.error('Erro ao criar backup:', event.target.error);
+                    const statusEl = document.getElementById('statusBackup');
+                    statusEl.innerHTML = `<div class="error-message">❌ Erro ao criar backup: ${event.target.error.message}</div>`;
                     showNotification("Erro ao criar backup.", "error");
                     showLoading(false);
                 };
@@ -2168,7 +2830,12 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                 for (let i = 0; i < localStorage.length; i++) {
                     const key = localStorage.key(i);
                     if (key.startsWith('checklist_')) {
-                        backupData[key] = JSON.parse(localStorage.getItem(key));
+                        try {
+                            backupData[key] = JSON.parse(localStorage.getItem(key));
+                            itemCount++;
+                        } catch (e) {
+                            console.error('Erro ao parsear checklist:', e);
+                        }
                     }
                 }
                 
@@ -2180,6 +2847,9 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                 linkElement.setAttribute('download', exportFileDefaultName);
                 linkElement.click();
                 
+                const statusEl = document.getElementById('statusBackup');
+                statusEl.innerHTML = `<div class="success-message">✅ Backup criado com sucesso! ${itemCount} check-lists incluídos.</div>`;
+                
                 showNotification("Backup criado com sucesso!", "success");
                 showLoading(false);
             }
@@ -2187,14 +2857,40 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
         
         function restaurarBackup() {
             const input = document.createElement('input');
-            input.type = 'file'; input.accept = '.json';
+            input.type = 'file'; 
+            input.accept = '.json';
             input.onchange = e => {
                 const file = e.target.files[0];
+                if (!file) return;
+                
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     try {
                         showLoading(true);
                         const backupData = JSON.parse(e.target.result);
+                        
+                        // Verificar se é um backup válido
+                        if (!backupData || typeof backupData !== 'object') {
+                            throw new Error("Formato de backup inválido");
+                        }
+                        
+                        // Contar itens no backup
+                        let backupItemCount = 0;
+                        for (const key in backupData) {
+                            if (key.startsWith('checklist_')) {
+                                backupItemCount++;
+                            }
+                        }
+                        
+                        if (backupItemCount === 0) {
+                            throw new Error("O arquivo não contém check-lists válidos");
+                        }
+                        
+                        // Confirmar restauração
+                        if (!confirm(`Tem certeza que deseja restaurar o backup? Isso substituirá todos os dados atuais (${backupItemCount} check-lists serão restaurados).`)) {
+                            showLoading(false);
+                            return;
+                        }
                         
                         // Limpar dados existentes
                         const keysToRemove = [];
@@ -2212,20 +2908,29 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                         }
                         
                         // Restaurar dados
-                        Object.keys(backupData).forEach(key => { 
-                            localStorage.setItem(key, JSON.stringify(backupData[key]));
-                            
-                            // Restaurar no IndexedDB se disponível
-                            if (db) {
-                                salvarDadosIndexedDB(backupData[key], key);
+                        let restoredCount = 0;
+                        for (const key in backupData) {
+                            if (key.startsWith('checklist_')) {
+                                localStorage.setItem(key, JSON.stringify(backupData[key]));
+                                
+                                // Restaurar no IndexedDB se disponível
+                                if (db) {
+                                    salvarDadosIndexedDB(backupData[key], key);
+                                }
+                                restoredCount++;
                             }
-                        });
+                        }
+                        
+                        const statusEl = document.getElementById('statusBackup');
+                        statusEl.innerHTML = `<div class="success-message">✅ Backup restaurado com sucesso! ${restoredCount} check-lists restaurados.</div>`;
                         
                         showNotification("Backup restaurado com sucesso! Recarregando...", "success");
                         setTimeout(() => location.reload(), 2000);
                     } catch (error) {
                         console.error("Erro ao restaurar backup:", error);
-                        showNotification("Erro ao restaurar backup: arquivo inválido", "error");
+                        const statusEl = document.getElementById('statusBackup');
+                        statusEl.innerHTML = `<div class="error-message">❌ Erro ao restaurar backup: ${error.message}</div>`;
+                        showNotification("Erro ao restaurar backup: " + error.message, "error");
                         showLoading(false);
                     }
                 };
@@ -2242,25 +2947,92 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             document.getElementById('modalBackup').style.display = 'none'; 
         }
         
-        // Preview de fotos gerais
+        // Preview de fotos e arquivos
         function setupFotosGeraisPreview() {
             const input = document.getElementById('fotosGerais');
             const preview = document.getElementById('previewFotosGerais');
             if (!input || !preview) return;
+            
             input.addEventListener('change', () => {
                 preview.innerHTML = '';
                 const files = Array.from(input.files || []);
+                
+                if (files.length === 0) {
+                    preview.innerHTML = '<p style="color: #666; font-style: italic;">Nenhum arquivo selecionado</p>';
+                    return;
+                }
+                
                 files.forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = ev => {
-                        const img = document.createElement('img');
-                        img.src = ev.target.result;
-                        img.className = 'photo-preview';
-                        preview.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
+                    const fileDiv = document.createElement('div');
+                    fileDiv.className = 'file-item';
+                    
+                    // Verificar se é uma imagem
+                    if (file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        reader.onload = ev => {
+                            const img = document.createElement('img');
+                            img.src = ev.target.result;
+                            img.className = 'photo-preview';
+                            img.title = file.name;
+                            fileDiv.appendChild(img);
+                            
+                            // Adicionar informações do arquivo
+                            const fileInfo = document.createElement('div');
+                            fileInfo.className = 'file-info';
+                            fileInfo.innerHTML = `
+                                <div class="file-name">${file.name}</div>
+                                <div class="file-size">${formatFileSize(file.size)}</div>
+                            `;
+                            fileDiv.appendChild(fileInfo);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        // Para arquivos não imagem
+                        const fileIcon = document.createElement('div');
+                        fileIcon.className = 'file-icon';
+                        
+                        // Definir ícone com base no tipo de arquivo
+                        if (file.type.includes('pdf')) {
+                            fileIcon.innerHTML = '📄';
+                            fileIcon.style.color = '#e53935';
+                        } else if (file.type.includes('word') || file.name.includes('.doc')) {
+                            fileIcon.innerHTML = '📝';
+                            fileIcon.style.color = '#1976d2';
+                        } else if (file.type.includes('sheet') || file.name.includes('.xls')) {
+                            fileIcon.innerHTML = '📊';
+                            fileIcon.style.color = '#388e3c';
+                        } else if (file.type.includes('text')) {
+                            fileIcon.innerHTML = '📃';
+                            fileIcon.style.color = '#5d4037';
+                        } else {
+                            fileIcon.innerHTML = '📎';
+                            fileIcon.style.color = '#455a64';
+                        }
+                        
+                        fileDiv.appendChild(fileIcon);
+                        
+                        // Adicionar informações do arquivo
+                        const fileInfo = document.createElement('div');
+                        fileInfo.className = 'file-info';
+                        fileInfo.innerHTML = `
+                            <div class="file-name">${file.name}</div>
+                            <div class="file-size">${formatFileSize(file.size)}</div>
+                        `;
+                        fileDiv.appendChild(fileInfo);
+                    }
+                    
+                    preview.appendChild(fileDiv);
                 });
             });
+        }
+
+        // Função auxiliar para formatar o tamanho do arquivo
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
         
         // Relatório de Tendência
@@ -2466,6 +3238,12 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             });
         }
         
+        // Nova função para abrir a Folha de Ponto
+        function abrirFolhaPonto() {
+            window.open('https://usa24hs.github.io/ponto/', '_blank');
+            showNotification('✓ Abrindo Folha de Ponto', 'success');
+        }
+        
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             // Inicializar IndexedDB
@@ -2487,6 +3265,18 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
             carregarDados();
             setupKeyboardShortcuts();
             setupFotosGeraisPreview();
+            
+            // Verificar se a mensagem temporária deve ser exibida
+            if (SHOW_TEMPORARY_MESSAGE) {
+                // Verificar se o usuário já fechou a mensagem
+                const messageClosed = localStorage.getItem('temporaryMessageClosed');
+                if (!messageClosed) {
+                    const messageElement = document.getElementById('temporaryMessage');
+                    if (messageElement) {
+                        messageElement.classList.add('show');
+                    }
+                }
+            }
             
             // Configurar detecção de status online/offline
             window.addEventListener('online', () => {
@@ -2522,6 +3312,12 @@ E-mail gerado automaticamente pelo sistema LEFE em ${new Date().toLocaleString()
                         marcarModificado();
                     }
                 });
+            });
+            
+            // Adicionar evento de mudança no campo tipoPlantao
+            const tipoPlantaoSelect = document.getElementById("tipoPlantao");
+            tipoPlantaoSelect.addEventListener('change', function() {
+                marcarModificado();
             });
             
             document.getElementById("placa").addEventListener("change", carregarDados);
